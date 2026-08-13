@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t fluid-ai:latest ./app'
+            }
+        }
+
+        stage('Load Image into Kind') {
+            steps {
+                sh 'kind load docker-image fluid-ai:latest --name fluid-ai'
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'kubectl apply -f k8s/postgres.yaml'
+                sh 'kubectl apply -f k8s/deployment.yaml'
+                sh 'kubectl apply -f k8s/service.yaml'
+            }
+        }
+
+        stage('Verify Deployment') {
+            steps {
+                sh 'kubectl rollout status deployment/fluid-ai --timeout=120s'
+                sh 'kubectl get pods'
+                sh 'kubectl get svc'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment completed successfully.'
+        }
+
+        failure {
+            echo 'Pipeline failed. '
+        }
+    }
+}
