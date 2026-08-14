@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: fluid-ai
-          image: fluidAi
+          image: fluid-ai:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
