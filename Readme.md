@@ -24,4 +24,4 @@ GitHub Push → Jenkins → Docker Build → Kind Load → Kubernetes Deploy →
 
 PostgreSQL runs inside the same Kubernetes cluster as a separate workload. 
 
-checking github webhook -- jenkins trigger 2
+checking github webhook -- jenkins trigger 3
