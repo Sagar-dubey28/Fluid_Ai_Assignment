@@ -22,4 +22,6 @@ The CI/CD flow is:
 
 GitHub Push → Jenkins → Docker Build → Kind Load → Kubernetes Deploy → Rollout Check
 
-PostgreSQL runs inside the same Kubernetes cluster as a separate workload. checking github web hook.
+PostgreSQL runs inside the same Kubernetes cluster as a separate workload. 
+
+checking github webhook -- jenkins trigger 2
